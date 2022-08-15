@@ -15,16 +15,19 @@ translator = LanguageTranslatorV3(
     authenticator = authenticator
 )
 
+translator.set_service_url(url)
 
 def english_to_french(english_text):
     """ English to French"""
-    french_text = translator.translate(text = english_text, model_id = 'en-fr').get_result()
-    print(json.dumps(french_text, indent=2, ensure_ascii=False))
-    return french_text
+    translation = json.dumps(translator.translate(text = english_text,\
+         model_id = 'en-fr').get_result(),indent=2,ensure_ascii=False)
+    french_text = json.loads(translation)
+    return french_text['translations'][0]['translation']
 
 def french_to_english(french_text):
     """French to English"""
-    english_text = translator.translate(text = french_text, model_id = 'fr-en').get_result()
-    print(json.dumps(french_text, indent=2, ensure_ascii=False))
-    return english_text
+    translation = json.dumps(translator.translate(text = french_text,\
+         model_id = 'fr-en').get_result(),indent=2,ensure_ascii=False)
+    english_text = json.loads(translation)
+    return english_text['translations'][0]['translation']
  
